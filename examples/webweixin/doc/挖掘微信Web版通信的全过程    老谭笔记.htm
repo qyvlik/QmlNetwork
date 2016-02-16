@@ -1,0 +1,690 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+    <meta name="description" content="程序的世界让我着迷..." />
+
+
+
+  <meta name="keywords" content="Web,微信," />
+
+
+
+  <link rel="alternate" href="/atom.xml" title="老谭笔记" type="application/atom+xml" />
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="article">
+<meta property="og:title" content="挖掘微信Web版通信的全过程">
+<meta property="og:url" content="http://www.tanhao.me/talk/1466.html/index.html">
+<meta property="og:site_name" content="老谭笔记">
+<meta property="og:description">
+<meta property="og:image" content="http://storage.tanhao.me/2013/08/weixin-240x240.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="挖掘微信Web版通信的全过程">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 挖掘微信Web版通信的全过程 // 老谭笔记 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">老谭笔记</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+<form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'Myzn8MXQwxivhKpZtE6L','2.0.0');
+</script>
+
+<div class="site-search-toggle"></div>
+    </div>
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              挖掘微信Web版通信的全过程
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-08-26T10:33:40+08:00" content="2013-08-26">
+            2013-08-26
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/talk/" itemprop="url" rel="index"><span itemprop="name">talk</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/talk/1466.html/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="talk/1466.html/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><img src="http://storage.tanhao.me/2013/08/weixin-240x240.jpg" alt="weixin"></p>
+<a id="more"></a>
+<p>昨天是周末，在家闲得无聊，于是去weiphone.com逛了一圈，偶然发现有人发了一帖叫<a href="http://bbs.weiphone.com/read-htm-tid-6763242.html" target="_blank" rel="external nofollow">《微信 for Mac》</a>，这勾起了我的好奇心，国内做Mac开发的人确实很少，对于那些能够独自开发一些Mac第三方工具的开发者我都表示很敬畏，于是点进去看了一个究竟，如果你们好奇也可以点进去看个明白，我最终得出的结论就是：坑爹呢这是！直接用一个WebView去加载了wx.qq.com这个网页也敢自称是微信For Mac？对于这种欺骗用户的行为我十分不屑，同时也让我在思考在微信不提供API的环境下开发一款原生的微信Mac版本是否可行，最有可能的就是去分析微信Web版本的通信过程，然后在程序中模拟这个流程，在我苦苦研究了一个下午之后，终于摸透了这个过程，并用程序实现了大部分功能，下面就详细解说一下微信Web版的流程：</p>
+<p><strong>1.微信服务器返回一个会话ID</strong></p>
+<p>微信Web版本不使用用户名和密码登录，而是采用二维码登录，所以服务器需要首先分配一个唯一的会话ID，用来标识当前的一次登录，通过请求地址：</p>
+<p><a href="https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&amp;redirect_uri=https%3A%2F%2Fwx.qq.com%2Fcgi-bin%2Fmmwebwx-bin%2Fwebwxnewloginpage&amp;fun=new&amp;lang=zh_CN&amp;_=1377482012272（其中1377482012272这个值是当前距离林威治标准时间的毫秒）" target="_blank" rel="external">https://login.weixin.qq.com/jslogin?appid=wx782c26e4c19acffb&amp;redirect_uri=https%3A%2F%2Fwx.qq.com%2Fcgi-bin%2Fmmwebwx-bin%2Fwebwxnewloginpage&amp;fun=new&amp;lang=zh_CN&amp;_=1377482012272（其中1377482012272这个值是当前距离林威治标准时间的毫秒）</a></p>
+<p>服务器会返回如下的字符串：</p>
+<p>window.QRLogin.code = 200; window.QRLogin.uuid = “DeA6idundY9VKn”;</p>
+<p>而这个DeA6idundY9VKn字符串就是微信服务器返回给我们的ID。</p>
+<p><strong>2.通过会话ID获得二维码</strong></p>
+<p>既然微信Web版本是通过二维码进行登录，如何获得这个随机的二维码呢？答案就是利用刚才获得的ID去请求服务器生成的二维码，通过上面的ID我们组合得到以下的URL地址：</p>
+<p><a href="https://login.weixin.qq.com/qrcode/DeA6idundY9VKn?t=webwx" target="_blank" rel="external">https://login.weixin.qq.com/qrcode/DeA6idundY9VKn?t=webwx</a></p>
+<p>该请求返回的便是我们需要的二维码，此时需要用户在微信的手机版本中扫描这个二维码（我就搞不明白微信官方是如何想的，登录Web版本竟然还需要手机微信去配合登录，难道没有考虑我被迫选择Web微信就是因为手机不在身边这样的情形么？）</p>
+<p><strong>3.轮询手机端是否已经扫描二维码并确认在Web端登录</strong></p>
+<p>当获得二维码之后，就需要用户去手机端去扫描二维码，并获得用户的授权，此时我们并不知道用户何时完成这个操作，所以我们只有轮询，而轮询的地址就是：</p>
+<p><a href="https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?uuid=DeA6idundY9VKn&amp;tip=1&amp;_=1377482045264（注意UUID和最后时间这两个参数）" target="_blank" rel="external">https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login?uuid=DeA6idundY9VKn&amp;tip=1&amp;_=1377482045264（注意UUID和最后时间这两个参数）</a></p>
+<p>如果服务器返回：</p>
+<p>window.code=201;</p>
+<p>则说明此时用户在手机端已经完成扫描，但还没有点击确认；</p>
+<p>如果服务器返回：</p>
+<p>window.redirect_uri=一个URL地址</p>
+<p>则说明此时用户已经在手机端完成了授权过程，保存下这个URL地址下一步骤中使用。</p>
+<p><strong>4.访问登录地址，获得uin和sid</strong></p>
+<p>通过访问上一步骤中获得的URL地址，可以在服务器返回的Cookies中获得到wxuin和wxsid这两个值，这两值在后续的通信过程中都要使用到这两个值，并且Cookies中也需要包括这两项。</p>
+<p><strong>5.初使化微信信息</strong></p>
+<p>前面的步骤算是完成了这个复杂的登录过程，如果我们需要使用微信就需要获得当前用户的信息、好友列表等，还有一个关键的就是同步信息（后续与服务器轮询中需要使用同步信息），通过访问以下的链接：</p>
+<p><a href="https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit?r=1377482058764（r依然是时间）" target="_blank" rel="external">https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit?r=1377482058764（r依然是时间）</a></p>
+<p>访问该链接需要使用POST，并且在Body中带上以下的JSON信息：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"BaseRequest"</span>:</span><br><span class="line">&#123;<span class="string">"Uin"</span>:<span class="string">"2545437902"</span>,<span class="string">"Sid"</span>:<span class="string">"QfLp+Z+FePzvOFoG"</span>,<span class="string">"Skey"</span>:<span class="string">""</span>,<span class="string">"DeviceID"</span>:<span class="string">"e1615250492"</span>&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个JSON串中Uin和Sid分别是上面步骤中获得的那两个Cookie值，DeviceID是一个本地生成的随机字符串（分析了官方的总是e+一串数字，所以我们也保持这样的格式）。</p>
+<p>服务器就会返回一个很长的JSON串，这其中包括：BaseResponse中的值用来表示请求状态码，ContactList主要用来表示联系人（此列表不全，只包括了类似通讯录助手、文件助手、微信团队和一些公众帐号等，后面会通过另一接口去获得更全面的信息），SyncKey是用户与服务器同步的信息，User就是当前登录用户自己的信息。</p>
+<p><strong>6.获得所有的好友列表</strong></p>
+<p>在上一步骤中已经获得了部分好友和公众帐号，如果需要获得完整的好友信息，就需要访问以下的链接：</p>
+<p><a href="https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetcontact?r=1377482079876（r依然是时间）" target="_blank" rel="external">https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetcontact?r=1377482079876（r依然是时间）</a></p>
+<p>访问该链接同样需要POST方式，但Body为空JSON：{}，服务器对身份的判定是通过Cookies，所以需要保持之前访问的Cookies不被修改（在Objective-C中会自动保存相关的Cookies，无需程序特殊处理），在返回的JSON串中，MemberList中就包含了所有的好友信息。</p>
+<p><strong>7.保持与服务器的信息同步</strong></p>
+<p>与服务器保持同步需要在客户端做轮询，该轮询的URL如下：</p>
+<p><a href="https://webpush.weixin.qq.com/cgi-bin/mmwebwx-bin/synccheck?callback=jQuery18309326978388708085_1377482079946&amp;r=1377482079876&amp;" target="_blank" rel="external">https://webpush.weixin.qq.com/cgi-bin/mmwebwx-bin/synccheck?callback=jQuery18309326978388708085_1377482079946&amp;r=1377482079876&amp;</a><br>sid=QfLp+Z+FePzvOFoG&amp;uin=2545437902&amp;deviceid=e1615250492&amp;synckey=(见以下说明)&amp;_=1377482079876</p>
+<p>其中的参数r和_都是time，sid，uin，deviceid与上面步骤的值相对应，此处的synkey是上步步骤获得的同步键值，但需要按一定的规则组合成以下的字符串：</p>
+<p>1_124125|2_452346345|3_65476547|1000_5643635</p>
+<p>就是将键和值用_隔开，不同的键值对用|隔开，但记得|需要URL编码成%7C，通过访问上面的地址，会返回如下的字符串：</p>
+<p>window.synccheck={retcode:”0”,selector:”0”}</p>
+<p>如果retcode中的值不为0，则说明与服务器的通信有问题了，但具体问题我就无法预测了，selector中的值表示客户端需要作出的处理，目前已经知道当为6的时候表示有消息来了，就需要去访问另一个接口获得新的消息。</p>
+<p><strong>8.获得别人发来的消息</strong></p>
+<p>当一个步骤中知道有新消息时，就需要去获取消息内容，通过访问以下的链接：</p>
+<p><a href="https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsync?sid=QfLp+Z+FePzvOFoG&amp;r=1377482079876" target="_blank" rel="external">https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsync?sid=QfLp+Z+FePzvOFoG&amp;r=1377482079876</a></p>
+<p>上面链接中的参数sid对应上面步骤中的值，r为时间，访问链接需要使用POST方式，Body中包括JSON串，该JSON串格式如下：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"BaseRequest"</span> : &#123;<span class="string">"Uin"</span>:<span class="number">2545437902</span>,<span class="string">"Sid"</span>:<span class="string">"QfLp+Z+FePzvOFoG"</span>&#125;,</span><br><span class="line"><span class="string">"SyncKey"</span> : &#123;<span class="string">"Count"</span>:<span class="number">4</span>,<span class="string">"List"</span>:[&#123;<span class="string">"Key"</span>:<span class="number">1</span>,<span class="string">"Val"</span>:<span class="number">620310295</span>&#125;,&#123;<span class="string">"Key"</span>:<span class="number">2</span>,<span class="string">"Val"</span>:<span class="number">620310303</span>&#125;,&#123;<span class="string">"Key"</span>:<span class="number">3</span>,<span class="string">"Val"</span>:<span class="number">620310285</span>&#125;,&#123;<span class="string">"Key"</span>:<span class="number">1000</span>,<span class="string">"Val"</span>:<span class="number">1377479086</span>&#125;]&#125;,</span><br><span class="line"><span class="string">"rr"</span> :<span class="number">1377482079876</span>&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>以下的信息中BaseRequest中包括的Uin与Sid与上面步骤中的值对应，SyncKey也是上面步骤中获得的同步键值对，rr为时间，访问成功之后服务器会返回一个JSON串，其中AddMsgList中是一个数组，包含了所有新消息。</p>
+<p><strong>9.向用户发送消息</strong></p>
+<p>用户主动发送消息，通过以下的URL地址：<br><a href="https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsendmsg?sid=QfLp+Z+FePzvOFoG&amp;r=1377482079876" target="_blank" rel="external">https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsendmsg?sid=QfLp+Z+FePzvOFoG&amp;r=1377482079876</a><br>上面的sid和r参数不再解释了，访问该URL采用POST方式，在Body中的JSON串形如以下的格式：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"BaseRequest"</span>:&#123;</span><br><span class="line">        <span class="string">"DeviceID"</span> : <span class="string">"e441551176"</span>,</span><br><span class="line">        <span class="string">"Sid"</span> : <span class="string">"S8wNi91Zry3024eg"</span>,</span><br><span class="line">        <span class="string">"Skey"</span> : <span class="string">"F820928BBA5D8ECA23448F076D2E8A915E1349E9FB4F4332"</span>,</span><br><span class="line">        <span class="string">"Uin"</span> : <span class="string">"2545437902"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"Msg"</span> : &#123;</span><br><span class="line">        <span class="string">"ClientMsgId"</span> : <span class="number">1377504862158</span>,</span><br><span class="line">        <span class="string">"Content"</span> : <span class="string">"hello"</span>,</span><br><span class="line">        <span class="string">"FromUserName"</span> : <span class="string">"wxid_2rrz8g8ezuox22"</span>,</span><br><span class="line">        <span class="string">"LocalID"</span> : <span class="number">1377504862158</span>,</span><br><span class="line">        <span class="string">"ToUserName"</span> : <span class="string">"wxid_j4nu420ojhsr21"</span>,</span><br><span class="line">        <span class="string">"Type"</span> : <span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"rr"</span> = <span class="number">1377504864463</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中BaseRequest都是授权相关的值，与上面的步骤中的值对应，Msg是对消息的描述，包括了发送人与接收人，消息内容，消息的类型(1为文本)，ClientMsgId和LocalID由本地生成。rr可用当前的时间。<br>在返回JSON结果中BaseResponse描述了发送情况，Ret为0表示发送成功。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Web/" rel="tag">#Web</a>
+          
+            <a href="/tags/微信/" rel="tag">#微信</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/code/1486.html/" rel="prev">微信For Mac的半成品</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/talk/1453.html/" rel="next">雷总，你终究改变了我对小米的态度</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+                  <div id="disqus_thread">
+                    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                  </div>
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/uploads/avatar.jpg" alt="TanHao" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">TanHao</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">程序的世界让我着迷...</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">147</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="powered-by">
+  由 <a class="theme-link" target="_blank" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="copyright">
+  
+  &copy; &nbsp;  2011 - 
+  2015
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author">TanHao</span>
+  &nbsp;&nbsp;<span>蜀ICP备12004580号</span>
+</div>
+
+<div class="links">
+  友情链接:
+  <a class="them-link" target="_blank" href="http://www.weisay.com/blog/">威言威语</a>
+  &nbsp;<a class="them-link" target="_blank" href="http://www.llku.com/">路路库</a>
+  &nbsp;<a class="them-link" target="_blank" href="https://www.fourfire.cc/">FourFire</a>
+  &nbsp;<a class="them-link" target="_blank" href="http://maccocoa.com/">MacCocoa</a>
+  &nbsp;<a class="them-link" target="_blank" href="http://bbs.cocoachina.com/">CocoaChina</a>
+</div>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=8912449&logo=255"></script>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tanhao';
+      var disqus_identifier = 'talk/1466.html/';
+      var disqus_title = '挖掘微信Web版通信的全过程';
+      var disqus_url = 'http://www.tanhao.me/talk/1466.html/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>
