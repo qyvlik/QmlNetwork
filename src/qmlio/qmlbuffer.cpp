@@ -1,6 +1,6 @@
 #include "qmlbuffer.h"
 
-#include <QBuffer>
+#include <QtCore/QBuffer>
 #include <QDebug>
 
 QmlBuffer::QmlBuffer(QObject *parent)

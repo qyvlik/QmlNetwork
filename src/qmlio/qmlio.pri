@@ -1,11 +1,15 @@
-INCLUDEPATH += $$PWD/../
+#INCLUDEPATH += $$PWD/../
 
-SOURCES += qmliodevice.cpp \
-    qmlbuffer.cpp \
-    qmlfileio.cpp \
+QT += core
 
-HEADERS += qmliodevice.h \
-    qmlbuffer.h \
-    qmlfileio.h \
+HEADERS += $$PWD/qmliodevice.h \
+    $$PWD/qmlbuffer.h \
+    $$PWD/qmlfileio.h \
+
+SOURCES += $$PWD/qmliodevice.cpp \
+    $$PWD/qmlbuffer.cpp \
+    $$PWD/qmlfileio.cpp \
+
+
 
 

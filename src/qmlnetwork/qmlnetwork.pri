@@ -1,13 +1,17 @@
-INCLUDEPATH += $$PWD/../
+#INCLUDEPATH += $$PWD/../
 
-SOURCES += src/qmlnetwork/qmlnetworkrequest.cpp \
-    src/qmlnetwork/qmlnetworkaccessmanager.cpp \
-    src/qmlnetwork/qmlnetworkresponse.cpp \
-    src/qmlnetwork/qmlnetworkabstractresponse.cpp
+QT += core network
 
-HEADERS += qmlnetworkrequest.h \
-    qmlnetworkaccessmanager.h \
-    qmlnetworkresponse.h \
-    qmlnetworkabstractresponse.h
+HEADERS += $$PWD/qmlnetworkrequest.h \
+    $$PWD/qmlnetworkaccessmanager.h \
+    $$PWD/qmlnetworkresponse.h \
+    $$PWD/qmlnetworkabstractresponse.h
+
+SOURCES += $$PWD/qmlnetworkrequest.cpp \
+    $$PWD/qmlnetworkaccessmanager.cpp \
+    $$PWD/qmlnetworkresponse.cpp \
+    $$PWD/qmlnetworkabstractresponse.cpp
+
+
 
 
