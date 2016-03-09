@@ -1,4 +1,4 @@
-#INCLUDEPATH += $$PWD/../
+INCLUDEPATH += $$PWD/../
 
 QT += core
 
