@@ -5,6 +5,12 @@ QmlNetworkRequest::QmlNetworkRequest(QObject *parent)
     : QObject(parent),
       m_ioDevice(Q_NULLPTR)
 {
+    qRegisterMetaType<Attribute>("QmlNetworkRequest::Attribute");
+    qRegisterMetaType<KnownHeaders>("QmlNetworkRequest::KnownHeaders");
+    qRegisterMetaType<CacheLoadControl>("QmlNetworkRequest::CacheLoadControl");
+    qRegisterMetaType<LoadControl>("QmlNetworkRequest::LoadControl");
+    qRegisterMetaType<Priority>("QmlNetworkRequest::Priority");
+
     connect( this, SIGNAL(requestChanged()), this, SLOT(onRequestChanged()) );
 }
 

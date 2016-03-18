@@ -7,7 +7,7 @@ QmlNetworkAbstractResponse::QmlNetworkAbstractResponse(QObject *parent)
     : QObject(parent),
       m_reply(Q_NULLPTR)
 {
-
+    qRegisterMetaType<NetworkError>("QmlNetworkAbstractResponse::NetworkError");
 }
 
 QmlNetworkAbstractResponse::~QmlNetworkAbstractResponse()
@@ -100,6 +100,30 @@ QJsonArray QmlNetworkAbstractResponse::getAllResponseHeaderPairs() const
     }
 }
 
+bool QmlNetworkAbstractResponse::isRunning() const
+{
+    return m_reply ? m_reply->isRunning() : false;
+}
+
+bool QmlNetworkAbstractResponse::isFinished() const
+{
+    return m_reply ? m_reply->isFinished() : false;
+}
+
+void QmlNetworkAbstractResponse::abort()
+{
+    if(m_reply) {
+        m_reply->abort();
+    }
+}
+
+void QmlNetworkAbstractResponse::ignoreSslErrors()
+{
+    if(m_reply) {
+        m_reply->ignoreSslErrors();
+    }
+}
+
 
 //qint64 QmlNetworkAbstractResponse::contentLength() const
 //{
@@ -112,6 +136,8 @@ QJsonArray QmlNetworkAbstractResponse::getAllResponseHeaderPairs() const
 void QmlNetworkAbstractResponse::clearOldReplyConnect()
 {
     if(m_reply != Q_NULLPTR) {
+        //! TODO
+        //! remove... later
         disconnect(m_reply, 0, this, 0);
         m_reply->deleteLater();
         m_reply = Q_NULLPTR;

@@ -4,6 +4,8 @@ QmlIODevice::QmlIODevice(QObject *parent)
     : QObject(parent),
       m_device(Q_NULLPTR)
 {
+    qRegisterMetaType<OpenModeFlag>("QmlIODevice::OpenModeFlag");
+    qRegisterMetaType<OpenMode>("QmlIODevice::OpenMode");
 
 }
 

@@ -5,6 +5,10 @@
 QmlFileIO::QmlFileIO(QObject *parent)
     : QmlIODevice(parent)
 {
+    qRegisterMetaType<FileError>("QmlFileIO::FileError");
+    qRegisterMetaType<Permission>("QmlFileIO::Permission");
+    qRegisterMetaType<Permissions>("QmlFileIO::Permissions");
+
     this->setDevice(new QFile(this));
 }
 

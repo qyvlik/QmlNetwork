@@ -88,7 +88,15 @@ public:
      */
     Q_INVOKABLE QJsonArray getAllResponseHeaderPairs() const;
 
+    Q_INVOKABLE bool isRunning() const;
+
+    Q_INVOKABLE bool isFinished() const;
+
     // Q_INVOKABLE qint64 contentLength() const;
+
+public Q_SLOTS:
+    void abort();
+    void ignoreSslErrors();
 
 protected Q_SLOTS:
     //! 重写这里
