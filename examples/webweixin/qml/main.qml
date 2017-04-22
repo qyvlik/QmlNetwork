@@ -27,7 +27,7 @@ PageStackWindow {
                     Layout.alignment: Qt.AlignLeft
                     onClicked: {
                         about.switchState();
-                        console.log(o.supperCall())
+                        console.log()
                     }
                 }
             }

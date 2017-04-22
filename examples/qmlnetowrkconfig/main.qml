@@ -24,6 +24,7 @@ ApplicationWindow {
     function getGithunZen() {
         var url = "https://api.github.com/zen"
         request.url = url;
+        // request.setHeader("")
         connectSignalOnce(response.finished, function(){
             lable.text = response.responseContent;
         });
